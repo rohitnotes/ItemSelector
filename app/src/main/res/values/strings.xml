@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ItemSelector</string>
+    <string name="empty_not_saved">Empty not saved</string>
 </resources>
