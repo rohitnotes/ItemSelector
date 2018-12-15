@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+                                             android:layout_height="match_parent"
+                                             tools:context=".NewMemberActivity">
     <EditText
             android:id="@+id/uid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/input_hint_uid"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="text"/>
+            android:inputType="text" android:importantForAutofill="no" tools:targetApi="o"/>
 
     <EditText
             android:id="@+id/tid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/input_hint_tid"
             app:layout_constraintTop_toBottomOf="@+id/uid"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="text"/>
+            android:inputType="text" android:importantForAutofill="no" tools:targetApi="o"/>
 
     <EditText
             android:id="@+id/displayname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/input_hint_display_name"
             app:layout_constraintTop_toBottomOf="@+id/tid"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="text"/>
+            android:inputType="text" android:importantForAutofill="no" tools:targetApi="o"/>
 
     <EditText
             android:id="@+id/alias"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/input_hint_alias"
             app:layout_constraintTop_toBottomOf="@+id/displayname"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="text"/>
+            android:inputType="text" android:importantForAutofill="no" tools:targetApi="o"/>
 
     <Button
             android:id="@+id/save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="save"
+            android:text="@string/save"
             app:layout_constraintTop_toBottomOf="@+id/alias"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
