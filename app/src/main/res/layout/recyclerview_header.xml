@@ -26,23 +26,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_view"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
                 android:id="@+id/default_cell_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_team"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="16dp"
                 android:scaleType="centerCrop"
+                tools:src="@drawable/ic_multiple_users_silhouette"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+        <TextView
+                android:id="@+id/default_cell_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                tools:text="Title"
+                app:layout_constraintStart_toEndOf="@+id/default_cell_image"
+                app:layout_constraintTop_toTopOf="@+id/default_cell_image"
+                app:layout_constraintBottom_toBottomOf="@id/default_cell_image"
         />
 
         <CheckBox

@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import java.lang.IllegalStateException
 
 /**
  * @author tonyyang
  */
-class MemberListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mHeaderCnt = 0
 
@@ -38,6 +39,8 @@ class MemberListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val searchView: EditText = itemView.findViewById(R.id.search_view)
         val defaultCellLayout: ConstraintLayout = itemView.findViewById(R.id.default_cell)
+        val defaultCellImage: ImageView = itemView.findViewById(R.id.default_cell_image)
+        val defaultCellText: TextView = itemView.findViewById(R.id.default_cell_text)
         val defaultCellCheckBox: CheckBox = itemView.findViewById(R.id.default_cell_checkbox)
     }
 
@@ -87,8 +90,10 @@ class MemberListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
                 false
             }
             holder.defaultCellLayout.setOnClickListener {
-                holder.defaultCellCheckBox.isChecked = !holder.defaultCellCheckBox.isChecked
+                holder.defaultCellCheckBox.isChecked = holder.defaultCellCheckBox.isChecked.not()
             }
+            holder.defaultCellImage.setImageResource(R.drawable.ic_multiple_users_silhouette)
+            holder.defaultCellText.text = context.getString(R.string.selector_header_text)
         } else if (holder is MemberViewHolder) {
             val realPosition = getRealPosition(position)
             val member = mMembers[realPosition]
