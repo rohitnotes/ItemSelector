@@ -18,8 +18,12 @@ class MemberListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
 
     private var mHeaderCnt = 0
 
-    private var isHeaderView: (Int) -> Boolean = { position ->
+    private val isHeaderView: (Int) -> Boolean = { position ->
         mHeaderCnt != 0 && position < mHeaderCnt
+    }
+
+    private val getRealPosition: (Int) -> Int = { position ->
+        position - mHeaderCnt
     }
 
     private val mInflater: LayoutInflater by lazy { LayoutInflater.from(context) }
@@ -86,7 +90,7 @@ class MemberListAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
                 holder.defaultCellCheckBox.isChecked = !holder.defaultCellCheckBox.isChecked
             }
         } else if (holder is MemberViewHolder) {
-            val realPosition = position - mHeaderCnt
+            val realPosition = getRealPosition(position)
             val member = mMembers[realPosition]
             holder.title.text = member.displayName
         }
