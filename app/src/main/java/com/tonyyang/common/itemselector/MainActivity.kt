@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val mAdapter by lazy {
-        MemberListAdapter(this)
+        val adapter = MemberListAdapter(this)
+        adapter.showHeader(true)
+        adapter
     }
 
     private val mMemberViewModel by lazy {
