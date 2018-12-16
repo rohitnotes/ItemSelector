@@ -27,6 +27,14 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         position - mHeaderCnt
     }
 
+    private val reverseVisibility: (Int) -> Int = { visibility ->
+        if (visibility == View.VISIBLE) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
     private val mInflater: LayoutInflater by lazy { LayoutInflater.from(context) }
 
     private val mMembers = mutableListOf<Member>()
@@ -46,6 +54,7 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
 
     class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
+        val checkView: View = itemView.findViewById(R.id.checkView)
     }
 
     fun showHeader(show: Boolean) {
@@ -98,6 +107,10 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             val realPosition = getRealPosition(position)
             val member = mMembers[realPosition]
             holder.title.text = member.displayName
+            holder.itemView.setOnClickListener {
+                val oldVisibilityState = holder.checkView.visibility
+                holder.checkView.visibility = reverseVisibility(oldVisibilityState)
+            }
         }
     }
 
