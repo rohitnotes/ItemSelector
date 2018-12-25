@@ -26,16 +26,14 @@ abstract class AppDatabase : RoomDatabase() {
             ).addCallback(sRoomDatabaseCallback).build()
         }
 
-        val getInstance: () -> AppDatabase = {
-            INSTANCE
-        }
-
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 PopulateDbFakeDataAsync(INSTANCE).execute()
             }
         }
+
+        fun getInstance(): AppDatabase = INSTANCE
     }
 
     private class PopulateDbFakeDataAsync internal constructor(db: AppDatabase) : AsyncTask<Void, Void, Void>() {
