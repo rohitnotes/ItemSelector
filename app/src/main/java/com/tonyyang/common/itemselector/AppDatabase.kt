@@ -6,6 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.os.AsyncTask
+import java.security.SecureRandom
 
 /**
  * @author tonyyang
@@ -37,20 +38,39 @@ abstract class AppDatabase : RoomDatabase() {
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                PopulateDbFakeInfoAsync(INSTANCE).execute()
+                PopulateDbFakeDataAsync(INSTANCE).execute()
             }
         }
     }
 
-    private class PopulateDbFakeInfoAsync internal constructor(db: AppDatabase?) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbFakeDataAsync internal constructor(db: AppDatabase?) : AsyncTask<Void, Void, Void>() {
 
         private val mDao: MemberDao? = db?.memberDao()
 
         override fun doInBackground(vararg params: Void): Void? {
             mDao?.deleteAll()
-            mDao?.insert(Member("ocs5jfszvy", "x2z2o83q", "Tony", "Tony boy"))
-            mDao?.insert(Member("mtky0763xs", "x2z2o83q", "Frank", "Fucky boy"))
+            for (i in 0 until 100) {
+                mDao?.insert(
+                    Member(
+                        getRandomLetter(10),
+                        getRandomLetter(8),
+                        "Tony $i",
+                        "Tony boy $i"
+                    )
+                )
+            }
             return null
+        }
+
+        private fun getRandomLetter(length: Int): String {
+            val secureRandom = SecureRandom()
+            val s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+            val generatedString = StringBuilder()
+            for (i in 0 until length) {
+                val randomSequence = secureRandom.nextInt(s.length)
+                generatedString.append(s[randomSequence])
+            }
+            return generatedString.toString().toLowerCase()
         }
     }
 }
