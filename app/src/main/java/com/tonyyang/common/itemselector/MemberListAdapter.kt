@@ -75,6 +75,10 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         notifyDataSetChanged()
     }
 
+    private fun getItem(position: Int): Member {
+        return mMembers[getRealPosition(position)]
+    }
+
     override fun getItemViewType(position: Int): Int {
         return if (isHeaderView(position)) {
             ItemType.HEADER.value
@@ -104,8 +108,7 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             holder.defaultCellImage.setImageResource(R.drawable.ic_multiple_users_silhouette)
             holder.defaultCellText.text = context.getString(R.string.selector_header_text)
         } else if (holder is MemberViewHolder) {
-            val realPosition = getRealPosition(position)
-            val member = mMembers[realPosition]
+            val member = getItem(position)
             holder.title.text = member.displayName
             holder.itemView.setOnClickListener {
                 val oldVisibilityState = holder.checkView.visibility
