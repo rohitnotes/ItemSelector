@@ -3,7 +3,6 @@ package com.tonyyang.common.itemselector
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
-import android.content.Context
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.os.AsyncTask
 import java.security.SecureRandom
@@ -20,19 +19,15 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "app.db"
 
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private val INSTANCE: AppDatabase by lazy {
+            Room.databaseBuilder(
+                CoreApplication.getContext(),
+                AppDatabase::class.java, DB_NAME
+            ).addCallback(sRoomDatabaseCallback).build()
+        }
 
-        fun getInstance(context: Context): AppDatabase {
-            if (INSTANCE == null) {
-                synchronized(AppDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java, DB_NAME
-                    ).addCallback(sRoomDatabaseCallback).build()
-                }
-            }
-            return INSTANCE!!
+        val getInstance: () -> AppDatabase = {
+            INSTANCE
         }
 
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
@@ -43,14 +38,14 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    private class PopulateDbFakeDataAsync internal constructor(db: AppDatabase?) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbFakeDataAsync internal constructor(db: AppDatabase) : AsyncTask<Void, Void, Void>() {
 
-        private val mDao: MemberDao? = db?.memberDao()
+        private val mDao: MemberDao = db.memberDao()
 
         override fun doInBackground(vararg params: Void): Void? {
-            mDao?.deleteAll()
+            mDao.deleteAll()
             for (i in 0 until 100) {
-                mDao?.insert(
+                mDao.insert(
                     Member(
                         getRandomLetter(10),
                         getRandomLetter(8),

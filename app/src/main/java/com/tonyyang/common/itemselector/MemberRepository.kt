@@ -11,7 +11,7 @@ import android.os.AsyncTask
 class MemberRepository(val application: Application) {
 
     private val mMemberDao by lazy {
-        AppDatabase.getInstance(application).memberDao()
+        AppDatabase.getInstance().memberDao()
     }
 
     private val mAllMembers: LiveData<List<Member>> by lazy {
