@@ -12,6 +12,9 @@ import android.widget.TextView
 import java.lang.IllegalStateException
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.orhanobut.logger.Logger
+import android.util.SparseBooleanArray
+
+
 
 /**
  * @author tonyyang
@@ -28,17 +31,11 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         position - mHeaderCnt
     }
 
-    private val reverseVisibility: (Int) -> Int = { visibility ->
-        if (visibility == View.VISIBLE) {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-    }
-
     private val mInflater: LayoutInflater by lazy { LayoutInflater.from(context) }
 
     private val mMembers = mutableListOf<Member>()
+
+    private val itemStateArray = SparseBooleanArray()
 
     private enum class ItemType(val value: Int) {
         HEADER(0),
@@ -107,11 +104,22 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             val member = getItem(position)
             Logger.d("photoPath: ".plus(member.photoPath))
             ImageLoader.getInstance().displayImage(member.photoPath, holder.image)
+            holder.checkView.visibility = if (itemStateArray.get(position)) View.VISIBLE else View.GONE
             holder.title.text = member.displayName
             holder.itemView.setOnClickListener {
-                val oldVisibilityState = holder.checkView.visibility
-                holder.checkView.visibility = reverseVisibility(oldVisibilityState)
+                switchState(position, holder.checkView)
             }
+        }
+    }
+
+    private fun switchState(position: Int, stateView: View) {
+        if (!itemStateArray.get(position, false)) {
+            stateView.visibility = View.VISIBLE
+            itemStateArray.put(position, true)
+        }
+        else  {
+            stateView.visibility = View.GONE
+            itemStateArray.put(position, false)
         }
     }
 
