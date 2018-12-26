@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.content.Intent
 import android.widget.ImageView
+import com.nostra13.universalimageloader.core.ImageLoader
 
 
 /**
@@ -62,7 +63,8 @@ class NewMemberActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
-            photoPath = uri?.path
+            photoPath = uri?.toString()
+            ImageLoader.getInstance().displayImage(uri.toString(), uploadPhotoIv)
         }
     }
 }
