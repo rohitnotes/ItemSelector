@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.content.Intent
+import android.widget.ImageView
 
 
 /**
@@ -14,18 +15,14 @@ import android.content.Intent
 class NewMemberActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_REPLY_UID = "com.tonyyang.common.itemselector.memberlistsql.REPLY_UID"
-        const val EXTRA_REPLY_TID = "com.tonyyang.common.itemselector.memberlistsql.REPLY_TID"
+        private const val REQUEST_CODE_PICK_IMAGE = 1
+        const val EXTRA_PHOTO_PATH = "com.tonyyang.common.itemselector.memberlistsql.PHOTO_PATH"
         const val EXTRA_REPLY_DISPLAY_NAME = "com.tonyyang.common.itemselector.memberlistsql.REPLY_DISPLAY_NAME"
         const val EXTRA_REPLY_ALIAS = "com.tonyyang.common.itemselector.memberlistsql.REPLY_ALIAS"
     }
 
-    private val uidET by lazy {
-        findViewById<EditText>(R.id.uid)
-    }
-
-    private val tidET by lazy {
-        findViewById<EditText>(R.id.tid)
+    private val uploadPhotoIv by lazy {
+        findViewById<ImageView>(R.id.upload_photo)
     }
 
     private val displayNameET by lazy {
@@ -40,24 +37,32 @@ class NewMemberActivity : AppCompatActivity() {
         findViewById<Button>(R.id.save)
     }
 
+    private var photoPath: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_member)
-
+        uploadPhotoIv.setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_PICK_IMAGE)
+        }
         saveBtn.setOnClickListener {
             val replyIntent = Intent()
-            if (uidET.text.isNullOrBlank() && tidET.text.isNullOrBlank()
-                && displayNameET.text.isNullOrBlank() && aliasET.text.isNullOrBlank()
-            ) {
-                setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                replyIntent.putExtra(EXTRA_REPLY_UID, uidET.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_TID, tidET.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_DISPLAY_NAME, displayNameET.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_ALIAS, aliasET.text.toString())
-                setResult(Activity.RESULT_OK, replyIntent)
-            }
+            replyIntent.putExtra(EXTRA_PHOTO_PATH, photoPath)
+            replyIntent.putExtra(EXTRA_REPLY_DISPLAY_NAME, displayNameET.text.toString())
+            replyIntent.putExtra(EXTRA_REPLY_ALIAS, aliasET.text.toString())
+            setResult(Activity.RESULT_OK, replyIntent)
             finish()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            val uri = data?.data
+            photoPath = uri?.path
         }
     }
 }

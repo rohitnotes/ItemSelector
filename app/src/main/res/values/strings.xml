@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ItemSelector</string>
-    <string name="input_hint_uid">Input user uid</string>
-    <string name="input_hint_tid">Input user tid</string>
-    <string name="input_hint_display_name">Input display name</string>
-    <string name="input_hint_alias">Input display name</string>
+    <string name="input_hint_uid">Enter user uid</string>
+    <string name="input_hint_tid">Enter user tid</string>
+    <string name="input_hint_display_name">Enter display name</string>
+    <string name="input_hint_alias">Enter display alias</string>
     <string name="save">Save</string>
     <string name="empty_not_saved">Empty not saved</string>
     <string name="selector_header_text">Select All Member</string>

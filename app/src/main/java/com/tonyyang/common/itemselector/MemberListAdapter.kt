@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import java.lang.IllegalStateException
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.orhanobut.logger.Logger
 
 /**
  * @author tonyyang
@@ -53,6 +55,7 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val image: ImageView = itemView.findViewById(R.id.image)
         val title: TextView = itemView.findViewById(R.id.title)
         val checkView: View = itemView.findViewById(R.id.checkView)
     }
@@ -109,6 +112,8 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             holder.defaultCellText.text = context.getString(R.string.selector_header_text)
         } else if (holder is MemberViewHolder) {
             val member = getItem(position)
+            Logger.d("photoPath: ".plus(member.photoPath))
+            ImageLoader.getInstance().displayImage(member.photoPath, holder.image)
             holder.title.text = member.displayName
             holder.itemView.setOnClickListener {
                 val oldVisibilityState = holder.checkView.visibility

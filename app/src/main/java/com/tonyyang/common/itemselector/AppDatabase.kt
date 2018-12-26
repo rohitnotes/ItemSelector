@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.os.AsyncTask
-import java.security.SecureRandom
+import kotlin.random.Random
 
 /**
  * @author tonyyang
@@ -42,28 +42,19 @@ abstract class AppDatabase : RoomDatabase() {
 
         override fun doInBackground(vararg params: Void): Void? {
             mDao.deleteAll()
+            val drawables = intArrayOf(R.drawable.ic_035_user_34, R.drawable.ic_004_user_3)
             for (i in 0 until 100) {
                 mDao.insert(
                     Member(
-                        getRandomLetter(10),
-                        getRandomLetter(8),
+                        Utils.getRandomLetter(10),
+                        Utils.getRandomLetter(8),
                         "Tony $i",
-                        "Tony boy $i"
+                        "Tony boy $i",
+                        Utils.getResourceDrawableUri(drawables[Random.nextInt(0, 2)]).toString()
                     )
                 )
             }
             return null
-        }
-
-        private fun getRandomLetter(length: Int): String {
-            val secureRandom = SecureRandom()
-            val s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
-            val generatedString = StringBuilder()
-            for (i in 0 until length) {
-                val randomSequence = secureRandom.nextInt(s.length)
-                generatedString.append(s[randomSequence])
-            }
-            return generatedString.toString().toLowerCase()
         }
     }
 }

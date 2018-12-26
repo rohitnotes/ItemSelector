@@ -59,11 +59,15 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val uid = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_UID)
-            val tid = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_TID)
+            val photoPath = data?.getStringExtra(NewMemberActivity.EXTRA_PHOTO_PATH) ?: ""
             val displayName = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_DISPLAY_NAME)
             val alias = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_ALIAS)
-            val member = Member(uid.toString(), tid.toString(), displayName.toString(), alias.toString())
+            val member = Member(
+                Utils.getRandomLetter(10),
+                Utils.getRandomLetter(8),
+                displayName.toString(),
+                alias.toString(),
+                photoPath)
             mMemberViewModel.insert(member)
         } else {
             Toast.makeText(applicationContext, R.string.empty_not_saved, Toast.LENGTH_LONG).show()
