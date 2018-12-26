@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import java.lang.IllegalStateException
@@ -47,7 +46,6 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val searchView: EditText = itemView.findViewById(R.id.search_view)
         val defaultCellLayout: ConstraintLayout = itemView.findViewById(R.id.default_cell)
         val defaultCellImage: ImageView = itemView.findViewById(R.id.default_cell_image)
         val defaultCellText: TextView = itemView.findViewById(R.id.default_cell_text)
@@ -100,11 +98,6 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {
-            holder.searchView.setOnEditorActionListener { v, _, _ ->
-                val keyword = v.text
-                // TODO: implementing keyword filtering
-                false
-            }
             holder.defaultCellLayout.setOnClickListener {
                 holder.defaultCellCheckBox.isChecked = holder.defaultCellCheckBox.isChecked.not()
             }

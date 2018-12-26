@@ -9,12 +9,17 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
+    }
+
+    private val mSearchView by lazy {
+        findViewById<EditText>(R.id.search_view)
     }
 
     private val mRecyclerView by lazy {
@@ -38,6 +43,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mSearchView.setOnEditorActionListener { v, _, _ ->
+            val keyword = v.text
+            // TODO: implementing keyword filtering
+            false
+        }
 
         mRecyclerView.apply {
             adapter = mAdapter
