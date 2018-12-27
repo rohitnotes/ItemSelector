@@ -55,11 +55,7 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     }
 
     fun showHeader(show: Boolean) {
-        mHeaderCnt = if (show) {
-            1
-        } else {
-            0
-        }
+        mHeaderCnt = if (show) 1 else 0
     }
 
     fun update(members: List<Member>?) {
