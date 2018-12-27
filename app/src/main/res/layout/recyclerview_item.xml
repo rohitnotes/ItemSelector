@@ -31,14 +31,13 @@
             app:layout_constraintStart_toEndOf="@+id/image"
             tools:text="Title"/>
 
-    <ImageView
-            android:id="@+id/checkView"
+    <CheckBox
+            android:id="@+id/stateView"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_checked2"
+            android:button="@drawable/item_checked_state"
             android:layout_marginEnd="16dp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -15,7 +15,6 @@ import com.orhanobut.logger.Logger
 import android.util.SparseBooleanArray
 
 
-
 /**
  * @author tonyyang
  */
@@ -52,7 +51,7 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
     class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.image)
         val title: TextView = itemView.findViewById(R.id.title)
-        val checkView: View = itemView.findViewById(R.id.checkView)
+        val stateView: CheckBox = itemView.findViewById(R.id.stateView)
     }
 
     fun showHeader(show: Boolean) {
@@ -104,23 +103,18 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             val member = getItem(position)
             Logger.d("photoPath: ".plus(member.photoPath))
             ImageLoader.getInstance().displayImage(member.photoPath, holder.image)
-            holder.checkView.visibility = if (itemStateArray.get(position)) View.VISIBLE else View.GONE
+            holder.stateView.isChecked = itemStateArray.get(position)
             holder.title.text = member.displayName
             holder.itemView.setOnClickListener {
-                switchState(position, holder.checkView)
+                switchState(position, holder.stateView)
             }
         }
     }
 
-    private fun switchState(position: Int, stateView: View) {
-        if (!itemStateArray.get(position, false)) {
-            stateView.visibility = View.VISIBLE
-            itemStateArray.put(position, true)
-        }
-        else  {
-            stateView.visibility = View.GONE
-            itemStateArray.put(position, false)
-        }
+    private fun switchState(position: Int, stateView: CheckBox) {
+        val changeState = !itemStateArray.get(position, false)
+        stateView.isChecked = changeState
+        itemStateArray.put(position, changeState)
     }
 
     override fun getItemCount(): Int = mHeaderCnt + mMembers.size
