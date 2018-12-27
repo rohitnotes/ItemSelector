@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import java.lang.IllegalStateException
 import com.nostra13.universalimageloader.core.ImageLoader
-import com.orhanobut.logger.Logger
 import android.util.SparseBooleanArray
 
 
@@ -97,7 +96,6 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             holder.defaultCellText.text = context.getString(R.string.selector_header_text)
         } else if (holder is MemberViewHolder) {
             val member = getItem(position)
-            Logger.d("photoPath: ".plus(member.photoPath))
             ImageLoader.getInstance().displayImage(member.photoPath, holder.image)
             holder.stateView.isChecked = itemStateArray.get(position)
             holder.title.text = member.displayName
