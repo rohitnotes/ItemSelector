@@ -8,6 +8,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,11 +43,16 @@ class SelectMemberFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        search_view.setOnEditorActionListener { v, _, _ ->
-            val keyword = v.text
-            // TODO: implementing keyword filtering
-            false
-        }
+        search_view.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val keyword = s
+                // TODO: implementing keyword filtering
+            }
+        })
 
         recyclerView.apply {
             adapter = mAdapter
