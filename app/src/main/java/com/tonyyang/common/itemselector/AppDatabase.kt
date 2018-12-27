@@ -48,8 +48,8 @@ abstract class AppDatabase : RoomDatabase() {
                     Member(
                         Utils.getRandomLetter(10),
                         Utils.getRandomLetter(8),
-                        "Tony $i",
-                        "Tony boy $i",
+                        "Tony " + (i + 1),
+                        "Tony boy " + (i + 1),
                         Utils.getResourceDrawableUri(drawables[Random.nextInt(0, 2)]).toString()
                     )
                 )
