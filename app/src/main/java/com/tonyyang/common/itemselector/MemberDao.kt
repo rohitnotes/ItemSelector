@@ -2,6 +2,7 @@ package com.tonyyang.common.itemselector
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import com.tonyyang.common.itemselector.Member.Companion.TABLE_NAME
 
 /**
  * @author tonyyang

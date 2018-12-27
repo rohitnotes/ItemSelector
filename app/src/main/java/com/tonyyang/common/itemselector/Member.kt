@@ -3,17 +3,11 @@ package com.tonyyang.common.itemselector
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.tonyyang.common.itemselector.Member.Companion.TABLE_NAME
 
 /**
  * @author tonyyang
  */
-
-const val TABLE_NAME = "member"
-const val UID = "uid"
-const val TID = "tid"
-const val DISPLAY_NAME = "display_name"
-const val ALIAS = "alias"
-const val PHOTO_PATH = "photo_path"
 
 @Entity(tableName = TABLE_NAME)
 data class Member(
@@ -25,4 +19,13 @@ data class Member(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
+    companion object {
+        const val TABLE_NAME = "member"
+        const val UID = "uid"
+        const val TID = "tid"
+        const val DISPLAY_NAME = "display_name"
+        const val ALIAS = "alias"
+        const val PHOTO_PATH = "photo_path"
+    }
 }
