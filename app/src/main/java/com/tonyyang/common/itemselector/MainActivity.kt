@@ -14,74 +14,14 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        private const val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
-    }
-
-    private val mSearchView by lazy {
-        findViewById<EditText>(R.id.search_view)
-    }
-
-    private val mRecyclerView by lazy {
-        findViewById<RecyclerView>(R.id.recyclerView)
-    }
-
-    private val mAdapter by lazy {
-        val adapter = MemberListAdapter(this)
-        adapter.showHeader(true)
-        adapter
-    }
-
-    private val mMemberViewModel by lazy {
-        ViewModelProviders.of(this).get(MemberViewModel::class.java)
-    }
-
-    private val mFab by lazy {
-        findViewById<View>(R.id.fab)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mSearchView.setOnEditorActionListener { v, _, _ ->
-            val keyword = v.text
-            // TODO: implementing keyword filtering
-            false
-        }
-
-        mRecyclerView.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
-
-        mMemberViewModel.getAllMembers().observe(this, Observer<List<Member>> {
-            // Update the cached copy of the members in the adapter
-            mAdapter.update(it)
-        })
-
-        mFab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewMemberActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val photoPath = data?.getStringExtra(NewMemberActivity.EXTRA_PHOTO_PATH) ?: ""
-            val displayName = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_DISPLAY_NAME)
-            val alias = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_ALIAS)
-            val member = Member(
-                Utils.getRandomLetter(10),
-                Utils.getRandomLetter(8),
-                displayName.toString(),
-                alias.toString(),
-                photoPath)
-            mMemberViewModel.insert(member)
-        } else {
-            Toast.makeText(applicationContext, R.string.empty_not_saved, Toast.LENGTH_LONG).show()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, SelectMemberFragment.newInstance())
+                    .commitNow()
         }
     }
 }
