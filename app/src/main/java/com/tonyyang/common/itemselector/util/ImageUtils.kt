@@ -1,4 +1,4 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.util
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import com.tonyyang.common.itemselector.CoreApplication
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -14,19 +15,8 @@ import java.security.SecureRandom
 /**
  * @author tonyyang
  */
-class Utils {
+class ImageUtils {
     companion object {
-        fun getRandomLetter(length: Int): String {
-            val secureRandom = SecureRandom()
-            val s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
-            val generatedString = StringBuilder()
-            for (i in 0 until length) {
-                val randomSequence = secureRandom.nextInt(s.length)
-                generatedString.append(s[randomSequence])
-            }
-            return generatedString.toString().toLowerCase()
-        }
-
         fun getResourceDrawableUri(resourceId: Int): Uri {
             val resources = CoreApplication.getContext().resources
             return Uri.Builder()

@@ -7,7 +7,7 @@
     android:background="#eeeeee"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".MainActivity">
+    tools:context=".member.selector.MemberSelectorActivity">
 
     <FrameLayout
         android:id="@+id/container"

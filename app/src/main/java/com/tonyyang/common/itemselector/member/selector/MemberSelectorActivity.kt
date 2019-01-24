@@ -1,9 +1,10 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.member.selector
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.tonyyang.common.itemselector.R
 
-class MainActivity : AppCompatActivity() {
+class MemberSelectorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -11,7 +12,10 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, SelectMemberFragment.newInstance())
+                    .replace(
+                        R.id.container,
+                        MemberSelectorFragment.newInstance()
+                    )
                     .commitNow()
         }
     }

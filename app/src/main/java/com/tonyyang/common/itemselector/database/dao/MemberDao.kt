@@ -1,8 +1,9 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.database.dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import com.tonyyang.common.itemselector.Member.Companion.TABLE_NAME
+import com.tonyyang.common.itemselector.database.Member
+import com.tonyyang.common.itemselector.database.Member.Companion.TABLE_NAME
 
 /**
  * @author tonyyang

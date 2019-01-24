@@ -1,4 +1,4 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.member.selector
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
@@ -12,12 +12,14 @@ import android.widget.TextView
 import java.lang.IllegalStateException
 import com.nostra13.universalimageloader.core.ImageLoader
 import android.util.SparseBooleanArray
+import com.tonyyang.common.itemselector.database.Member
+import com.tonyyang.common.itemselector.R
 
 
 /**
  * @author tonyyang
  */
-class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mHeaderCnt = 0
 
@@ -81,8 +83,12 @@ class MemberListAdapter(private val context: Context) : RecyclerView.Adapter<Rec
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ItemType.HEADER.value -> HeaderViewHolder(mInflater.inflate(R.layout.recyclerview_header, parent, false))
-            ItemType.MEMBER.value -> MemberViewHolder(mInflater.inflate(R.layout.recyclerview_item, parent, false))
+            ItemType.HEADER.value -> HeaderViewHolder(
+                mInflater.inflate(R.layout.recyclerview_header, parent, false)
+            )
+            ItemType.MEMBER.value -> MemberViewHolder(
+                mInflater.inflate(R.layout.recyclerview_item, parent, false)
+            )
             else -> throw IllegalStateException("Illegal ItemType")
         }
     }

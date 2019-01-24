@@ -1,10 +1,15 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.os.AsyncTask
+import com.tonyyang.common.itemselector.CoreApplication
+import com.tonyyang.common.itemselector.R
+import com.tonyyang.common.itemselector.database.dao.MemberDao
+import com.tonyyang.common.itemselector.util.TestUtils
+import com.tonyyang.common.itemselector.util.ImageUtils
 import kotlin.random.Random
 
 /**
@@ -22,18 +27,21 @@ abstract class AppDatabase : RoomDatabase() {
         private val INSTANCE: AppDatabase by lazy {
             Room.databaseBuilder(
                 CoreApplication.getContext(),
-                AppDatabase::class.java, DB_NAME
+                AppDatabase::class.java,
+                DB_NAME
             ).addCallback(sRoomDatabaseCallback).build()
         }
 
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                PopulateDbFakeDataAsync(INSTANCE).execute()
+                PopulateDbFakeDataAsync(INSTANCE)
+                    .execute()
             }
         }
 
-        fun getInstance(): AppDatabase = INSTANCE
+        fun getInstance(): AppDatabase =
+            INSTANCE
     }
 
     private class PopulateDbFakeDataAsync internal constructor(db: AppDatabase) : AsyncTask<Void, Void, Void>() {
@@ -42,15 +50,18 @@ abstract class AppDatabase : RoomDatabase() {
 
         override fun doInBackground(vararg params: Void): Void? {
             mDao.deleteAll()
-            val drawables = intArrayOf(R.drawable.ic_035_user_34, R.drawable.ic_004_user_3)
+            val drawables = intArrayOf(
+                R.drawable.ic_035_user_34,
+                R.drawable.ic_004_user_3
+            )
             for (i in 0 until 100) {
                 mDao.insert(
                     Member(
-                        Utils.getRandomLetter(10),
-                        Utils.getRandomLetter(8),
+                        TestUtils.getRandomLetter(10),
+                        TestUtils.getRandomLetter(8),
                         "Tony " + (i + 1),
                         "Tony boy " + (i + 1),
-                        Utils.getResourceDrawableUri(drawables[Random.nextInt(0, 2)]).toString()
+                        ImageUtils.getResourceDrawableUri(drawables[Random.nextInt(0, 2)]).toString()
                     )
                 )
             }

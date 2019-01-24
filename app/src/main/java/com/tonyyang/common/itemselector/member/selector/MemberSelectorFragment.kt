@@ -1,4 +1,4 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.member.selector
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
@@ -14,27 +14,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.tonyyang.common.itemselector.database.Member
+import com.tonyyang.common.itemselector.R
+import com.tonyyang.common.itemselector.member.NewMemberActivity
+import com.tonyyang.common.itemselector.util.TestUtils
 import kotlinx.android.synthetic.main.fragment_select_member.*
 
 /**
  * @author tonyyang
  */
 
-class SelectMemberFragment: Fragment() {
+class MemberSelectorFragment: Fragment() {
 
     companion object {
         private const val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
-        fun newInstance() = SelectMemberFragment()
+        fun newInstance() = MemberSelectorFragment()
     }
 
     private val mAdapter by lazy {
-        val adapter = MemberListAdapter(activity as Context)
+        val adapter = MemberSelectorAdapter(activity as Context)
         adapter.showHeader(true)
         adapter
     }
 
     private val mMemberViewModel by lazy {
-        ViewModelProviders.of(this).get(MemberViewModel::class.java)
+        ViewModelProviders.of(this).get(MemberSelectorViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,7 +53,6 @@ class SelectMemberFragment: Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val keyword = s
                 // TODO: implementing keyword filtering
             }
         })
@@ -66,7 +69,9 @@ class SelectMemberFragment: Fragment() {
 
         fab.setOnClickListener {
             val intent = Intent(activity, NewMemberActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+            startActivityForResult(intent,
+                NEW_WORD_ACTIVITY_REQUEST_CODE
+            )
         }
     }
 
@@ -78,11 +83,12 @@ class SelectMemberFragment: Fragment() {
             val displayName = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_DISPLAY_NAME)
             val alias = data?.getStringExtra(NewMemberActivity.EXTRA_REPLY_ALIAS)
             val member = Member(
-                    Utils.getRandomLetter(10),
-                    Utils.getRandomLetter(8),
-                    displayName.toString(),
-                    alias.toString(),
-                    photoPath)
+                TestUtils.getRandomLetter(10),
+                TestUtils.getRandomLetter(8),
+                displayName.toString(),
+                alias.toString(),
+                photoPath
+            )
             mMemberViewModel.insert(member)
         } else {
             Toast.makeText(activity, R.string.empty_not_saved, Toast.LENGTH_LONG).show()

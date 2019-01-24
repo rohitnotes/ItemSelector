@@ -1,14 +1,17 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.member.selector
 
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
+import com.tonyyang.common.itemselector.database.AppDatabase
+import com.tonyyang.common.itemselector.database.Member
+import com.tonyyang.common.itemselector.database.dao.MemberDao
 
 /**
  * @author tonyyang
  */
 
-class MemberRepository(val application: Application) {
+class MemberSelectorRepository(val application: Application) {
 
     private val mMemberDao by lazy {
         AppDatabase.getInstance().memberDao()

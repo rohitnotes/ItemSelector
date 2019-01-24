@@ -1,9 +1,9 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.database
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.tonyyang.common.itemselector.Member.Companion.TABLE_NAME
+import com.tonyyang.common.itemselector.database.Member.Companion.TABLE_NAME
 
 /**
  * @author tonyyang

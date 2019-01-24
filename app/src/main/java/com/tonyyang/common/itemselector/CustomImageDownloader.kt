@@ -5,6 +5,7 @@ import android.net.Uri
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader
 import java.io.InputStream
 import android.support.v7.content.res.AppCompatResources
+import com.tonyyang.common.itemselector.util.ImageUtils
 
 /**
  * @author tonyyang
@@ -24,7 +25,7 @@ class CustomImageDownloader(context: Context): BaseImageDownloader(context) {
             val resourceId = context.resources.getIdentifier(
                 resourceName, "drawable", context.packageName)
             val drawable = AppCompatResources.getDrawable(context, resourceId)
-            return Utils.drawable2InputStream(drawable)
+            return ImageUtils.drawable2InputStream(drawable)
         }
         return super.getStreamFromOtherSource(imageUri, extra)
     }

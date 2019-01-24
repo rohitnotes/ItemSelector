@@ -1,4 +1,4 @@
-package com.tonyyang.common.itemselector
+package com.tonyyang.common.itemselector.member
 
 import android.app.Activity
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.content.Intent
 import android.widget.ImageView
 import com.nostra13.universalimageloader.core.ImageLoader
+import com.tonyyang.common.itemselector.R
 
 
 /**
@@ -47,7 +48,9 @@ class NewMemberActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             intent.type = "image/*"
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_PICK_IMAGE)
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                REQUEST_CODE_PICK_IMAGE
+            )
         }
         saveBtn.setOnClickListener {
             val replyIntent = Intent()
