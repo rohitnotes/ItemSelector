@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import com.tonyyang.common.itemselector.R
 import com.tonyyang.common.itemselector.member.NewMemberActivity
 import com.tonyyang.common.itemselector.util.TestUtils
 import kotlinx.android.synthetic.main.fragment_select_member.*
+import com.tonyyang.common.itemselector.SeparatorDecoration
+
 
 /**
  * @author tonyyang
@@ -60,6 +63,7 @@ class MemberSelectorFragment: Fragment() {
         recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
+            addItemDecoration(SeparatorDecoration.Builder(context).setMargin(16F, 0F).build())
         }
 
         mMemberViewModel.getAllMembers().observe(this, Observer<List<Member>> {
