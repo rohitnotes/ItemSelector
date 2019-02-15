@@ -21,7 +21,7 @@ import com.tonyyang.common.itemselector.R
  */
 class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mHeaderCnt = 0
+    var mHeaderCnt = 0
 
     private val isHeaderView: (Int) -> Boolean = { position ->
         mHeaderCnt != 0 && position < mHeaderCnt

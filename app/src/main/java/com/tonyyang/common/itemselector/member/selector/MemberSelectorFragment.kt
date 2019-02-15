@@ -63,7 +63,10 @@ class MemberSelectorFragment: Fragment() {
             setHasFixedSize(true)
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SeparatorDecoration.Builder(context).setMargin(16F, 0F).build())
+            addItemDecoration(SeparatorDecoration.Builder(context)
+                .setMargin(16F, 0F)
+                .setHeaderCount(1)
+                .build())
         }
 
         mMemberViewModel.getAllMembers().observe(this, Observer<List<Member>> {

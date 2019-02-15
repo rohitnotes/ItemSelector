@@ -19,14 +19,15 @@ class SeparatorDecoration
     backgroundColor: Int = Color.WHITE,
     separatorColor: Int = Color.GRAY,
     private val mMarginLeft: Float = 0F,
-    private val mMarginRight: Float = 0F
+    private val mMarginRight: Float = 0F,
+    private val mHeaderCnt: Int = 0
 ) : RecyclerView.ItemDecoration() {
 
     private val mSeparatorPaint = Paint()
 
     private val mBackgroundPaint = Paint()
 
-    private var firstItemView: View? = null
+    private var headerViews: MutableList<View> = mutableListOf()
 
     init {
         mSeparatorPaint.apply {
@@ -49,8 +50,8 @@ class SeparatorDecoration
         if (position > 0 && position < state.itemCount) {
             outRect.set(0, 0, 0, mSeparatorPaint.strokeWidth.toInt()) // left, top, right, bottom
         } else {
-            if (firstItemView == null && position == 0) {
-                firstItemView = view
+            if (position < mHeaderCnt) {
+                headerViews.add(view)
             }
             outRect.setEmpty() // 0, 0, 0, 0
         }
@@ -66,7 +67,7 @@ class SeparatorDecoration
             val view = parent.getChildAt(i)
 
             // skip first item view
-            if (view == firstItemView) {
+            if (view == headerViews) {
                 continue
             }
 
@@ -77,10 +78,14 @@ class SeparatorDecoration
 
             // and finally draw the separator
             if (position < state.itemCount) {
-                c.drawLine(view.left.toFloat(), (view.bottom + offset).toFloat(),
-                    view.left.toFloat() + mMarginLeft - 1, (view.bottom + offset).toFloat(), mBackgroundPaint)
-                c.drawLine(view.left.toFloat() + mMarginLeft, (view.bottom + offset).toFloat(),
-                    view.right.toFloat() - mMarginRight, (view.bottom + offset).toFloat(), mSeparatorPaint)
+                c.drawLine(
+                    view.left.toFloat(), (view.bottom + offset).toFloat(),
+                    view.left.toFloat() + mMarginLeft - 1, (view.bottom + offset).toFloat(), mBackgroundPaint
+                )
+                c.drawLine(
+                    view.left.toFloat() + mMarginLeft, (view.bottom + offset).toFloat(),
+                    view.right.toFloat() - mMarginRight, (view.bottom + offset).toFloat(), mSeparatorPaint
+                )
             }
         }
     }
@@ -98,6 +103,7 @@ class SeparatorDecoration
         private var mColor: Int = Color.GRAY
         private var mMarginLeft = 0F
         private var mMarginRight = 0F
+        private var mHeaderCnt = 0
 
         /**
          * Set the background color from a resource.
@@ -187,6 +193,11 @@ class SeparatorDecoration
             return this
         }
 
+        fun setHeaderCount(headerCount: Int): Builder {
+            mHeaderCnt = headerCount
+            return this
+        }
+
         /**
          * Get the configured SeparatorDecoration.
          *
@@ -194,7 +205,7 @@ class SeparatorDecoration
          * @see SeparatorDecoration
          */
         fun build(): SeparatorDecoration {
-            return SeparatorDecoration(mWidth, mBGColor, mColor, mMarginLeft, mMarginRight)
+            return SeparatorDecoration(mWidth, mBGColor, mColor, mMarginLeft, mMarginRight, mHeaderCnt)
         }
     }
 }
