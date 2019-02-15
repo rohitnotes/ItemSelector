@@ -34,9 +34,9 @@ class MemberSelectorFragment: Fragment() {
     }
 
     private val mAdapter by lazy {
-        val adapter = MemberSelectorAdapter(activity as Context)
-        adapter.showHeader(true)
-        adapter
+        MemberSelectorAdapter(activity as Context).apply {
+            showHeader(true)
+        }
     }
 
     private val mMemberViewModel by lazy {
