@@ -1,31 +1,42 @@
 package com.tonyyang.common.itemselector.member.selector
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import com.tonyyang.common.itemselector.database.Member
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * @author tonyyang
  */
-class MemberSelectorViewModel(application: Application) : AndroidViewModel(application) {
+class MemberSelectorViewModel : ViewModel() {
 
-    private val mMemberSelectorRepository: MemberSelectorRepository by lazy {
-        MemberSelectorRepository(
-            application
-        )
+    private val mAllMembers by lazy {
+        MemberSelectorRepository.getAllMember()
     }
 
-    private val mAllMembers: LiveData<List<Member>> by lazy {
-        mMemberSelectorRepository.getAllMember()
+    private val mIsUpdating by lazy {
+        MutableLiveData<Boolean>()
     }
 
     fun getAllMembers(): LiveData<List<Member>> {
         return mAllMembers
     }
 
-    fun insert(member: Member) {
-        mMemberSelectorRepository.insert(member)
+    fun getIsUpdating(): LiveData<Boolean> {
+        return mIsUpdating
+    }
+
+    fun addNewMember(member: Member) {
+        mIsUpdating.value = true
+        GlobalScope.launch(Dispatchers.IO) {
+            MemberSelectorRepository.insert(member)
+            delay(1500)
+            mIsUpdating.postValue(false)
+        }
     }
 
 }

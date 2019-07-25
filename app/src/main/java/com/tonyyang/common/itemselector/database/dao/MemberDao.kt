@@ -16,6 +16,9 @@ interface MemberDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg members: Member)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(members: List<Member>)
+
     @Update
     fun update(member: Member)
 

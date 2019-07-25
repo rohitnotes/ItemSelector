@@ -74,6 +74,14 @@ class MemberSelectorFragment: Fragment() {
             mAdapter.update(it)
         })
 
+        mMemberViewModel.getIsUpdating().observe(this, Observer<Boolean> { isVisible ->
+            if (isVisible == true) {
+                progress_circle.visibility = View.VISIBLE
+            } else {
+                progress_circle.visibility = View.GONE
+            }
+        })
+
         fab.setOnClickListener {
             val intent = Intent(activity, NewMemberActivity::class.java)
             startActivityForResult(intent,
@@ -96,7 +104,7 @@ class MemberSelectorFragment: Fragment() {
                 alias.toString(),
                 photoPath
             )
-            mMemberViewModel.insert(member)
+            mMemberViewModel.addNewMember(member)
         } else {
             Toast.makeText(activity, R.string.empty_not_saved, Toast.LENGTH_LONG).show()
         }
