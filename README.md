@@ -1,3 +1,3 @@
 # ItemSelector
 
-<img src="screenshots/main_page.png" width="500" />
+<img src="screenshots/1.png" width="500" />
