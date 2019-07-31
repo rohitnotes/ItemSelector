@@ -1,13 +1,10 @@
 package com.tonyyang.common.itemselector.database.dao
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.tonyyang.common.itemselector.database.Member
 import com.tonyyang.common.itemselector.database.Member.Companion.TABLE_NAME
 
-/**
- * @author tonyyang
- */
 @Dao
 interface MemberDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

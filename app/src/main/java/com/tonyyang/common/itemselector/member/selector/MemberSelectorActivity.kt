@@ -1,6 +1,6 @@
 package com.tonyyang.common.itemselector.member.selector
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.tonyyang.common.itemselector.R
 

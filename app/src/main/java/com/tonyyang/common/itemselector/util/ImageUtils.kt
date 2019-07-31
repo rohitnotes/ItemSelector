@@ -12,9 +12,6 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.security.SecureRandom
 
-/**
- * @author tonyyang
- */
 class ImageUtils {
     companion object {
         fun getResourceDrawableUri(resourceId: Int): Uri {

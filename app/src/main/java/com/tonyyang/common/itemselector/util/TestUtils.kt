@@ -2,9 +2,6 @@ package com.tonyyang.common.itemselector.util
 
 import java.security.SecureRandom
 
-/**
- * @author tonyyang
- */
 
 class TestUtils {
     companion object {

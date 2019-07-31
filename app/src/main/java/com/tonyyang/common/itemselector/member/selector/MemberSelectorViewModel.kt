@@ -1,17 +1,15 @@
 package com.tonyyang.common.itemselector.member.selector
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.tonyyang.common.itemselector.database.Member
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-/**
- * @author tonyyang
- */
+
 class MemberSelectorViewModel : ViewModel() {
 
     private val mAllMembers by lazy {

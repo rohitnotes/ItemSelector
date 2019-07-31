@@ -1,13 +1,12 @@
 package com.tonyyang.common.itemselector.member.selector
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -21,10 +20,6 @@ import com.tonyyang.common.itemselector.util.TestUtils
 import kotlinx.android.synthetic.main.fragment_select_member.*
 import com.tonyyang.common.itemselector.SeparatorDecoration
 
-
-/**
- * @author tonyyang
- */
 
 class MemberSelectorFragment: Fragment() {
 
@@ -62,7 +57,7 @@ class MemberSelectorFragment: Fragment() {
         recyclerView.apply {
             setHasFixedSize(true)
             adapter = mAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
             addItemDecoration(SeparatorDecoration.Builder(context)
                 .setMargin(16F, 0F)
                 .setHeaderCount(1)

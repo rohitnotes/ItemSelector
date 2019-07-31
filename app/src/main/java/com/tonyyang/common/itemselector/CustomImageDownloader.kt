@@ -4,12 +4,10 @@ import android.content.Context
 import android.net.Uri
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader
 import java.io.InputStream
-import android.support.v7.content.res.AppCompatResources
+import androidx.appcompat.content.res.AppCompatResources
 import com.tonyyang.common.itemselector.util.ImageUtils
 
-/**
- * @author tonyyang
- */
+
 class CustomImageDownloader(context: Context): BaseImageDownloader(context) {
 
     companion object {

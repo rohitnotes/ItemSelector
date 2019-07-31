@@ -1,9 +1,9 @@
 package com.tonyyang.common.itemselector.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.db.SupportSQLiteDatabase
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.tonyyang.common.itemselector.CoreApplication
 import com.tonyyang.common.itemselector.R
 import com.tonyyang.common.itemselector.database.dao.MemberDao
@@ -14,9 +14,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-/**
- * @author tonyyang
- */
 
 @Database(entities = [Member::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

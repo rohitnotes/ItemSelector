@@ -1,16 +1,9 @@
 package com.tonyyang.common.itemselector.member.selector
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import com.tonyyang.common.itemselector.database.AppDatabase
 import com.tonyyang.common.itemselector.database.Member
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-/**
- * @author tonyyang
- */
 
 object MemberSelectorRepository {
 

@@ -1,13 +1,10 @@
 package com.tonyyang.common.itemselector.database
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.tonyyang.common.itemselector.database.Member.Companion.TABLE_NAME
 
-/**
- * @author tonyyang
- */
 
 @Entity(tableName = TABLE_NAME)
 data class Member(

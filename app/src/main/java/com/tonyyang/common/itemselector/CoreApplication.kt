@@ -16,9 +16,6 @@ import com.orhanobut.logger.Logger
 import com.orhanobut.logger.AndroidLogAdapter
 
 
-/**
- * @author tonyyang
- */
 class CoreApplication : Application() {
 
     companion object {
