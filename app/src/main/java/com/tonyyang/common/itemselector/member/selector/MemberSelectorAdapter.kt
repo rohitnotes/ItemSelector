@@ -6,17 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
 import java.lang.IllegalStateException
 import com.nostra13.universalimageloader.core.ImageLoader
 import android.util.SparseBooleanArray
+import android.widget.*
 import com.tonyyang.common.itemselector.database.Member
 import com.tonyyang.common.itemselector.R
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MemberSelectorAdapter(private val context: Context) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
     var mHeaderCnt = 0
 
@@ -24,13 +25,19 @@ class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter
         mHeaderCnt != 0 && position < mHeaderCnt
     }
 
-    private val getRealPosition: (Int) -> Int = { position ->
+    private val realPosition: (Int) -> Int = { position ->
         position - mHeaderCnt
     }
 
     private val mInflater: LayoutInflater by lazy { LayoutInflater.from(context) }
 
-    private val mMembers = mutableListOf<Member>()
+    private val mLock = Any()
+
+    private var mLastFilterConstraint = ""
+
+    private val originList = mutableListOf<Member>()
+
+    private var filteredList = mutableListOf<Member>()
 
     private val itemStateArray = SparseBooleanArray()
 
@@ -56,18 +63,19 @@ class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter
         mHeaderCnt = if (show) 1 else 0
     }
 
-    fun update(members: List<Member>?) {
-        mMembers.apply {
-            clear()
-            if (members != null) {
-                addAll(members)
+    fun update(memberList: List<Member>) {
+        synchronized(mLock) {
+            originList.apply {
+                clear()
+                addAll(memberList)
             }
         }
-        notifyDataSetChanged()
+
+        notifyAdapterDataSetChanged()
     }
 
     private fun getItem(position: Int): Member {
-        return mMembers[getRealPosition(position)]
+        return filteredList[realPosition(position)]
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -114,5 +122,45 @@ class MemberSelectorAdapter(private val context: Context) : RecyclerView.Adapter
         itemStateArray.put(position, changeState)
     }
 
-    override fun getItemCount(): Int = mHeaderCnt + mMembers.size
+    private fun notifyAdapterDataSetChanged() {
+        if (mLastFilterConstraint.isNotEmpty()) {
+            filter.filter(mLastFilterConstraint)
+        } else {
+            synchronized(mLock) {
+                filteredList = ArrayList(originList)
+            }
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun getItemCount(): Int = mHeaderCnt + filteredList.size
+
+    override fun getFilter() = object : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val charString = constraint.toString().also {
+                mLastFilterConstraint = it
+            }
+            filteredList = if (charString.isEmpty()) {
+                originList
+            } else {
+                mutableListOf<Member>().apply {
+                    originList.forEach {
+                        if (it.displayName.toLowerCase(Locale.getDefault()).contains(charString)) {
+                            this.add(it)
+                        }
+                    }
+                }
+            }
+            return FilterResults().apply {
+                values = filteredList
+            }
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            @Suppress("UNCHECKED_CAST")
+            filteredList = results?.values as MutableList<Member>
+
+            notifyDataSetChanged()
+        }
+    }
 }
