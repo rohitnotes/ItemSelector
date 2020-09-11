@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tonyyang.common.itemselector.R
 import com.tonyyang.common.itemselector.SeparatorDecoration
@@ -36,7 +36,7 @@ class MemberSelectorFragment : Fragment() {
     }
 
     private val mMemberViewModel by lazy {
-        ViewModelProviders.of(this).get(MemberSelectorViewModel::class.java)
+        ViewModelProvider(this).get(MemberSelectorViewModel::class.java)
     }
 
     private var isAddNewMember = false
@@ -69,7 +69,7 @@ class MemberSelectorFragment : Fragment() {
             )
         }
 
-        mMemberViewModel.getAllMembers().observe(this, Observer<List<Member>> {
+        mMemberViewModel.getAllMembers().observe(viewLifecycleOwner, Observer<List<Member>> {
             // Update the cached copy of the members in the adapter
             mAdapter.update(it)
             if (isAddNewMember) {
@@ -81,7 +81,7 @@ class MemberSelectorFragment : Fragment() {
             }
         })
 
-        mMemberViewModel.getIsUpdating().observe(this, Observer<Boolean> { isVisible ->
+        mMemberViewModel.getIsUpdating().observe(viewLifecycleOwner, Observer<Boolean> { isVisible ->
             if (isVisible == true) {
                 progress_circle.visibility = View.VISIBLE
             } else {
